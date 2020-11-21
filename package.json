@@ -1,0 +1,14 @@
+{
+  "name": "seba_lab",
+  "version": "1.0.0",
+  "description": "SEBA lab project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Daniel Bilic",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
