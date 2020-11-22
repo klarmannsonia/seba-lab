@@ -1,4 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
+import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
 
 // @desc Auth user & get token
@@ -16,7 +17,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null,
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
