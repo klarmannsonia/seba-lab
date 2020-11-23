@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,8 +19,6 @@ import Typography from "@material-ui/core/Typography";
 // components
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserDetails } from "../actions/userActions";
-import FormContainer from "../components/FormContainer";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -51,6 +50,9 @@ const ProfileScreen = ({ history, location }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -80,6 +82,14 @@ const ProfileScreen = ({ history, location }) => {
       setMessage("Password and Confirm Password do not match");
     } else {
       // dipatch update profile
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          name,
+          email,
+          password,
+        })
+      );
     }
   };
 
@@ -91,6 +101,7 @@ const ProfileScreen = ({ history, location }) => {
         </Typography>
         {error && <Message severity="error">{error}</Message>}
         {message && <Message severity="error">{message}</Message>}
+        {success && <Message severity="success">Profile Updated</Message>}
         {loading && <Loader />}
         <form onSubmit={onSubmitHandler}>
           <div>
