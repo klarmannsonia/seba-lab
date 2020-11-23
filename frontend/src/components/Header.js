@@ -16,6 +16,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ handleDarkMode, darkMode }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -102,6 +104,11 @@ const Header = () => {
           >
             KELVIN
           </Typography>
+
+          <FormControlLabel
+            control={<Switch onChange={handleDarkMode} value={darkMode} />}
+            label={darkMode ? "dark" : "light"}
+          />
           {userInfo ? (
             <IconButton
               edge="end"
