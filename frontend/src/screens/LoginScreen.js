@@ -47,11 +47,11 @@ const LoginScreen = ({ history, location }) => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       history.push(redirect);
-  //     }
-  //   }, [history, userInfo, redirect]);
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
 
   const handleClickShowPassword = () => {
     setshowPassword(!showPassword);
@@ -121,7 +121,7 @@ const LoginScreen = ({ history, location }) => {
           Sign In
         </Button>
       </form>
-      <Grid container spacing={3}>
+      <Grid item container spacing={3}>
         <Grid item xs={12} className={classes.margin}>
           New Customer?{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : "/regiter"}>
