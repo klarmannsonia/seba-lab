@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 // components
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { login } from "../actions/userActions";
+import { register } from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,17 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginScreen = ({ history, location }) => {
+const RegisterScreen = ({ history, location }) => {
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
   const [showPassword, setshowPassword] = useState(false);
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -63,18 +66,37 @@ const LoginScreen = ({ history, location }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // dipatch login
-    dispatch(login(email, password));
+
+    // check if password and confirm password are the same
+    if (password !== confirmPassword) {
+      setMessage("Password and Confirm Password do not match");
+    } else {
+      // dipatch register
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <FormContainer>
       <Typography variant="h5" className={classes.marginTypography}>
-        SIGN IN
+        SIGN UP
       </Typography>
       {error && <Message severity="error">{error}</Message>}
+      {message && <Message severity="error">{message}</Message>}
       {loading && <Loader />}
       <form onSubmit={onSubmitHandler}>
+        <div>
+          <FormControl variant="outlined" fullWidth className={classes.margin}>
+            <InputLabel htmlFor="name">Name</InputLabel>
+            <OutlinedInput
+              id="name"
+              type={"name"}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              labelWidth={70}
+            />
+          </FormControl>
+        </div>
         <div>
           <FormControl variant="outlined" fullWidth className={classes.margin}>
             <InputLabel htmlFor="email">Email</InputLabel>
@@ -111,6 +133,29 @@ const LoginScreen = ({ history, location }) => {
             />
           </FormControl>
         </div>
+        <div>
+          <FormControl variant="outlined" fullWidth className={classes.margin}>
+            <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
+            <OutlinedInput
+              id="confirmPassword"
+              type={showPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              labelWidth={70}
+            />
+          </FormControl>
+        </div>
 
         <Button
           variant="contained"
@@ -118,14 +163,14 @@ const LoginScreen = ({ history, location }) => {
           type="submit"
           className={classes.margin}
         >
-          Sign In
+          Register
         </Button>
       </form>
       <Grid item container spacing={3}>
         <Grid item xs={12} className={classes.margin}>
-          New Customer?{" "}
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Register
+          Have an Account?{" "}
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+            Login
           </Link>
         </Grid>
       </Grid>
@@ -133,4 +178,4 @@ const LoginScreen = ({ history, location }) => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
