@@ -1,7 +1,10 @@
 import React from "react";
+
+// material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   textCenter: {
@@ -18,7 +21,9 @@ const Footer = () => {
       <Container>
         <Grid container>
           <Grid item xs={12} className={classes.textCenter}>
-            Copyright &copy; KELVIN
+            <Typography variant="h6" className={classes.marginTypography}>
+              Copyright &copy; KELVIN
+            </Typography>
           </Grid>
         </Grid>
       </Container>

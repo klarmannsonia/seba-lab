@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -57,14 +58,15 @@ const ProfileScreen = ({ history, location }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      if (!user.name) {
+      if (!user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, success]);
 
   const handleClickShowPassword = () => {
     setshowPassword(!showPassword);
@@ -95,7 +97,7 @@ const ProfileScreen = ({ history, location }) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={4} direction="column">
+      <Grid item xs={4} container direction="column">
         <Typography variant="h6" className={classes.marginTypography}>
           USER PROFILE
         </Typography>
@@ -204,7 +206,7 @@ const ProfileScreen = ({ history, location }) => {
           </Button>
         </form>
       </Grid>
-      <Grid item xs={8} direction="column">
+      <Grid item xs={8} container direction="column">
         <Typography variant="h6" className={classes.marginTypography}>
           SOME MORE USER INFO ...
         </Typography>
