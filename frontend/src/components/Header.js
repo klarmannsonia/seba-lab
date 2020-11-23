@@ -38,7 +38,7 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            SEBA LAB
+            KELVIN
           </Typography>
           <Link component={RouterLink} color="inherit" to="/login">
             Login

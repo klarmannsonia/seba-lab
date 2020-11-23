@@ -18,7 +18,7 @@ const Footer = () => {
       <Container>
         <Grid container>
           <Grid item xs={12} className={classes.textCenter}>
-            Copyright &copy; SEBA LAB
+            Copyright &copy; KELVIN
           </Grid>
         </Grid>
       </Container>

@@ -7,10 +7,11 @@ const useStyles = makeStyles((theme) => ({}));
 
 const FormContainer = ({ children }) => {
   const classes = useStyles();
+
   return (
     <Container>
-      <Grid>
-        <Grid item xs={12} md={6}>
+      <Grid container justify="center">
+        <Grid item xs={4}>
           {children}
         </Grid>
       </Grid>
