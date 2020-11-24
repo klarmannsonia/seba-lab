@@ -47,6 +47,7 @@ const ProfileScreen = ({ history, location }) => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+  console.log("user", user);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -58,10 +59,11 @@ const ProfileScreen = ({ history, location }) => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      if (!user.name || success) {
+      if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
       } else {
+        // dispatch(getUserDetails("profile"));
         setName(user.name);
         setEmail(user.email);
       }
