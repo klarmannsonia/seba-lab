@@ -4,16 +4,18 @@ import colors from "colors";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
 
+// redis cache
+import "./services/cache.js";
+
 //swagger
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from './swagger/swagger.js'
+import swaggerDocument from "./swagger/swagger.js";
 
 // import routes
 import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 connectDB();
-
 
 // express init
 const app = express();
