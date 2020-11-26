@@ -7,14 +7,15 @@ const redisUrl = "redis://127.0.0.1:6379";
 const client = redis.createClient(redisUrl);
 
 // enable promise support for client.get redis function
-client.get = util.promisify(client.get);
+client.hget = util.promisify(client.hget);
 
 // save a reference to mongoose exec function
 const exec = mongoose.Query.prototype.exec;
 
-mongoose.Query.prototype.cache = function () {
+mongoose.Query.prototype.cache = function (options = {}) {
   // make cache toggleable
   this._cache = true;
+  this._hashkey = JSON.stringify(options.key || "");
 
   // make cache chainable
   return this;
@@ -35,7 +36,7 @@ mongoose.Query.prototype.exec = async function () {
   );
 
   // check if key exists in redis memory
-  const cacheValue = await client.get(key);
+  const cacheValue = await client.hget(this._hashkey, key);
 
   if (cacheValue) {
     console.log("CACHE");
@@ -52,10 +53,16 @@ mongoose.Query.prototype.exec = async function () {
   const result = await exec.apply(this, arguments);
   console.log("normal exec return");
 
-  client.set(key, JSON.stringify(result));
+  client.hset(this._hashkey, key, JSON.stringify(result), "EX", 10);
 
   return result;
 };
+
+const clearCache = async (h) => {
+  await client.del(JSON.stringify(h));
+};
+
+export default clearCache;
 
 // $ redis-cli
 // > config set stop-writes-on-bgsave-error no

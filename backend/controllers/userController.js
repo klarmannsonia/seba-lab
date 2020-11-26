@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
+import clearHash from "../services/cache.js";
 
 // @desc Auth user & get token
 // @route POST /api/users/login
@@ -65,7 +66,9 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).cache();
+  const user = await User.findById(req.user._id).cache({
+    key: req.user._id,
+  });
 
   if (user) {
     res.json({
