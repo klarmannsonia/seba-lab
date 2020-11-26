@@ -66,8 +66,8 @@ const ProfileScreen = ({ history, location }) => {
         console.log("user", user);
       } else {
         // dispatch(getUserDetails("profile"));
-        setName(user.name);
-        setEmail(user.email);
+        setName(userInfo.name);
+        setEmail(userInfo.email);
       }
     }
   }, [dispatch, history, userInfo, user, success]);
