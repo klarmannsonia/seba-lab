@@ -16,6 +16,13 @@ import {
   Switch,
 } from "@material-ui/core";
 
+// react toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// error interceptor
+import "./services/interceptor";
+
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -32,6 +39,17 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Router>
           <Header darkMode={darkMode} handleDarkMode={handleDarkMode} />
           <main>

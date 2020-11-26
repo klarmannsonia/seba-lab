@@ -14,6 +14,7 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 
@@ -42,6 +43,16 @@ export const login = (email, password) => async (dispatch) => {
 
     // save user to localstorage
     localStorage.setItem("userInfo", JSON.stringify(data));
+
+    toast.success("Successful logout ", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -57,6 +68,15 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
+  toast.success("Successful logout ", {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -158,7 +178,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
-
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
@@ -166,6 +185,16 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     // save user to localstorage
     localStorage.setItem("userInfo", JSON.stringify(data));
+
+    toast.success("Successful profile update", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,

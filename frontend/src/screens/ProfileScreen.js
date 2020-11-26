@@ -47,7 +47,6 @@ const ProfileScreen = ({ history, location }) => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-  console.log("user", user);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -62,6 +61,9 @@ const ProfileScreen = ({ history, location }) => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
+        console.log("EFFECT");
+        console.log("success", success);
+        console.log("user", user);
       } else {
         // dispatch(getUserDetails("profile"));
         setName(user.name);
@@ -105,7 +107,6 @@ const ProfileScreen = ({ history, location }) => {
         </Typography>
         {error && <Message severity="error">{error}</Message>}
         {message && <Message severity="error">{message}</Message>}
-        {success && <Message severity="success">Profile Updated</Message>}
         {loading && <Loader />}
         <form onSubmit={onSubmitHandler}>
           <div>
